@@ -13,6 +13,8 @@ public class Main {
        // WriteReceiver wr = new WriteReceiver();
        // FWrite fw=new FWrite(wr.filename);
 
+        System.out.println("GitHub change");
+
         FWrite fw = new FWrite("test2.txt");
 
         System.out.println("Esperando o ficheiro ser enviado...\n");
