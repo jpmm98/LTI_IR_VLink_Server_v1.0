@@ -15,7 +15,7 @@ public class Main {
 
         System.out.println("GitHub change");
 
-        FWrite fw = new FWrite("test2.txt");
+        FWrite fw = new FWrite("tracy-chap-test.jpg");
 
         System.out.println("Esperando o ficheiro ser enviado...\n");
 

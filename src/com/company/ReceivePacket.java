@@ -3,6 +3,8 @@ package com.company;
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
+import static com.company.Packet.SizePacket;
+
 class ReceivePacket {
     private byte[] DataToW;
 
@@ -12,8 +14,9 @@ class ReceivePacket {
         byte[] dataF;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        while((dataF = cP.receive()).length > 8){
+        do{
 
+            dataF = cP.receive();
             baos.write(Arrays.copyOfRange(dataF,3, dataF.length-5));
             try {
 
@@ -37,7 +40,7 @@ class ReceivePacket {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        }while(dataF.length == SizePacket);
 
         this.DataToW = baos.toByteArray();
     }
@@ -46,7 +49,7 @@ class ReceivePacket {
 
 
 
-    byte[] getDataF() {
+      byte[] getDataF() {
         return this.DataToW;
     }
 }
