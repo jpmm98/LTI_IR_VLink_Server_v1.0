@@ -15,7 +15,6 @@ public class ReceivePacket {
 
             this.dataF = cP.receive();
 
-
             try {
 
                 assert this.dataF != null;

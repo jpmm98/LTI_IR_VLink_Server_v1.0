@@ -44,17 +44,20 @@ public class ComPort {
                     while (sPort.bytesAvailable() == 0) {
                         Thread.sleep(300);
                     }
+                    while(sPort.bytesAvailable() != 0){
 
-                    //Packet.SizePacket
-                    byte[] readBuffer = new byte[Packet.SizePacket];
+                        byte[] readBuffer = new byte[this.sPort.bytesAvailable()];
+                        sPort.readBytes(readBuffer, readBuffer.length);
 
-                    sPort.readBytes(readBuffer, readBuffer.length);
+                        for (byte aReadBuffer : readBuffer) {
+                            System.out.print(aReadBuffer + " ");
+                        }
 
-                    for (byte aReadBuffer : readBuffer) {
-                        System.out.print(aReadBuffer + " ");
+                        return readBuffer;
+
                     }
+                    //Packet.SizePacket
 
-                    return readBuffer;
 
 
             } catch (Exception e) {
