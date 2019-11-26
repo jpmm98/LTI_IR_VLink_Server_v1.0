@@ -44,7 +44,6 @@ public class ComPort {
                     while (sPort.bytesAvailable() == 0) {
                         Thread.sleep(300);
                     }
-                    while(sPort.bytesAvailable() != 0){
 
                         byte[] readBuffer = new byte[this.sPort.bytesAvailable()];
                         sPort.readBytes(readBuffer, readBuffer.length);
@@ -55,7 +54,7 @@ public class ComPort {
 
                         return readBuffer;
 
-                    }
+
                     //Packet.SizePacket
 
 
