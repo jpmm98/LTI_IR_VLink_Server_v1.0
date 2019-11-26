@@ -14,7 +14,7 @@ public class ComPort {
     private int baudrate;
 
 
-    public ComPort(String nomePorta, int baudRate){
+    ComPort(String nomePorta, int baudRate){
         this.portN = nomePorta;
         this.baudrate = baudRate;
 
@@ -26,7 +26,7 @@ public class ComPort {
 
     public boolean portStatus(){return this.sPort.openPort();}
 
-    public boolean send(byte[] packet, int size){
+    boolean send(byte[] packet, int size){
         if (this.sPort.isOpen()){
             sPort.writeBytes(packet,size);
             return true;
@@ -35,7 +35,7 @@ public class ComPort {
     }
 
 
-    public byte[] receive() {
+    byte[] receive() {
 
 
         this.sPort.openPort();
@@ -45,17 +45,17 @@ public class ComPort {
                         Thread.sleep(300);
                     }
 
+                        System.out.println("Bytes na trama: "+sPort.bytesAvailable());
+
                         byte[] readBuffer = new byte[this.sPort.bytesAvailable()];
                         sPort.readBytes(readBuffer, readBuffer.length);
 
                         for (byte aReadBuffer : readBuffer) {
-                            System.out.print(aReadBuffer + " ");
+                            System.out.print((aReadBuffer & 0xFF) + " ");
                         }
 
                         return readBuffer;
 
-
-                    //Packet.SizePacket
 
 
 

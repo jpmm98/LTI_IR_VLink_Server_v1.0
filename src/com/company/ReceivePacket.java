@@ -1,28 +1,28 @@
 package com.company;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
-public class ReceivePacket {
-    private ComPort cP;
-    private WriteReceiver WR;
-    private Send_T st = new Send_T();
-    private byte[] dataF;
+class ReceivePacket {
+    private byte[] DataToW;
 
-    public ReceivePacket(String PortName, int Baudrate) throws Exception {
-        cP = new ComPort(PortName,Baudrate);
+    ReceivePacket(String PortName, int Baudrate) throws Exception {
+        ComPort cP = new ComPort(PortName, Baudrate);
         CheckLoss cl = new CheckLoss();
+        byte[] dataF;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
+        while((dataF = cP.receive()).length > 8){
 
-            this.dataF = cP.receive();
-
+            baos.write(Arrays.copyOfRange(dataF,3, dataF.length-5));
             try {
 
-                assert this.dataF != null;
-                byte x = this.dataF[2];
+                byte x = dataF[2];
 
-                if (cl.checkCRC(this.dataF)) {
-                    if (cl.checkSEQ(this.dataF)) {
-                        System.out.println("\nBem recebido\n" + this.dataF[2]);
+                Send_T st = new Send_T();
+                if (cl.checkCRC(dataF)) {
+                    if (cl.checkSEQ(dataF)) {
+                        System.out.println("\nBem recebido\n seqN: " + dataF[2]);
                         cP.send(st.ackT(x), st.ackT(x).length);
                     } else {
                         System.out.println("Numero de sequencia errado");
@@ -32,20 +32,22 @@ public class ReceivePacket {
                     System.out.println("\nMal Recebido\n");
                     cP.send(st.nackT(x), st.nackT(x).length);
 
-
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+
+        this.DataToW = baos.toByteArray();
     }
 
 
 
 
 
-    public byte[] getDataF() {
-        return Arrays.copyOfRange(dataF,3, this.dataF.length-5);
+    byte[] getDataF() {
+        return this.DataToW;
     }
 }
 

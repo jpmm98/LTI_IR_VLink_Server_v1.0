@@ -20,7 +20,7 @@ public class Main {
         System.out.println("Esperando o ficheiro ser enviado...\n");
 
 
-        ReceivePacket rp = new ReceivePacket("COM2", 9600);
+        ReceivePacket rp = new ReceivePacket("COM3", 9600);
 
           fw.writeData(rp.getDataF());
 
