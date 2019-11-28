@@ -9,17 +9,22 @@ import static com.company.FRead.DataSize;
 
 public class ComPort {
 
+
     private String portN;
     private SerialPort sPort;
     private int baudrate;
 
 
     ComPort(String nomePorta, int baudRate){
+
+
+
         this.portN = nomePorta;
         this.baudrate = baudRate;
 
         this.sPort = SerialPort.getCommPort(this.portN);
-        this.sPort.setComPortParameters(this.baudrate,8, 1, 0);
+        this.sPort.setFlowControl(SerialPort.FLOW_CONTROL_DISABLED);
+        this.sPort.setComPortParameters(this.baudrate,8, 1, SerialPort.NO_PARITY);
 
 
     }
@@ -42,7 +47,7 @@ public class ComPort {
 
             try {
                     while (sPort.bytesAvailable() == 0) {
-                        Thread.sleep(300);
+                        Thread.sleep(3000);
                     }
 
                         System.out.println("Bytes na trama: "+sPort.bytesAvailable());
