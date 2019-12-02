@@ -42,8 +42,8 @@ public class CheckLoss {
 
 
 
-
-
     }
 
+
+    public byte getSq() { return sq;}
 }

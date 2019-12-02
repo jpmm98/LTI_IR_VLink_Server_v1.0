@@ -11,7 +11,7 @@ public class Header {
 
 
     public Header(byte t){
-        this.bous = new ByteArrayOutputStream();
+        this.bous = new ByteArrayOutputStream(2);
         this.type = t;
 
     }

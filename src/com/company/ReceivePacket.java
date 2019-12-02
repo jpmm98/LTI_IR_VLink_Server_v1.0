@@ -29,6 +29,7 @@ class ReceivePacket {
                         cP.send(st.ackT(x), st.ackT(x).length);
                     } else {
                         System.out.println("Numero de sequencia errado");
+                        cP.send(st.nackT(cl.getSq()), st.nackT(cl.getSq()).length);
                     }
                 } else {
 

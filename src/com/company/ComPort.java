@@ -23,7 +23,7 @@ public class ComPort {
         this.baudrate = baudRate;
 
         this.sPort = SerialPort.getCommPort(this.portN);
-        this.sPort.setFlowControl(SerialPort.FLOW_CONTROL_DISABLED);
+       // this.sPort.setFlowControl(SerialPort.FLOW_CONTROL_DISABLED);
         this.sPort.setComPortParameters(this.baudrate,8, 1, SerialPort.NO_PARITY);
 
 
