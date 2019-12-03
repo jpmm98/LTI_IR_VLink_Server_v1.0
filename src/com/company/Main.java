@@ -17,7 +17,7 @@ public class Main {
 
         FWrite fw = new FWrite("tracy-chap-test.txt");
 
-        System.out.println("Esperando o ficheiro ser enviado...\n");
+
 
 
         ReceivePacket rp = new ReceivePacket("COM2", 9600);

@@ -25,7 +25,7 @@ public class ComPort {
         this.sPort = SerialPort.getCommPort(this.portN);
        // this.sPort.setFlowControl(SerialPort.FLOW_CONTROL_DISABLED);
         this.sPort.setComPortParameters(this.baudrate,8, 1, SerialPort.NO_PARITY);
-
+        this.reconect();
 
     }
 
@@ -41,9 +41,7 @@ public class ComPort {
 
 
     byte[] receive() {
-
-
-        this.sPort.openPort();
+        System.out.println("\nReceiving File...");
 
             try {
                     while (sPort.bytesAvailable() == 0) {
@@ -64,8 +62,12 @@ public class ComPort {
 
 
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (InterruptedException e) {
+                System.out.println("Thread interrupted");
+                System.out.println("Reconnecting");
+                this.reconect();
+
+                this.receive();
             }
         return null;
 
@@ -80,6 +82,26 @@ public class ComPort {
             return c[0] == ack;
         }
         return false;
+    }
+
+    public void reconect(){
+
+        int[] timer = new int[100];
+        System.out.println("Trying to open port...");
+
+        for (int t: timer) {
+            while(!this.sPort.isOpen()){
+
+                try{
+                    this.sPort.openPort();
+                    System.out.print(".");
+                    Thread.sleep(1000);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        }
     }
 
     public int getBytesAvailable(){
