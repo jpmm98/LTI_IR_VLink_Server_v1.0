@@ -23,7 +23,7 @@ public class ComPort {
         this.baudrate = baudRate;
 
         this.sPort = SerialPort.getCommPort(this.portN);
-       // this.sPort.setFlowControl(SerialPort.FLOW_CONTROL_DISABLED);
+        this.sPort.setFlowControl(SerialPort.FLOW_CONTROL_DISABLED);
         this.sPort.setComPortParameters(this.baudrate,8, 1, SerialPort.NO_PARITY);
         this.reconect();
 
@@ -40,10 +40,10 @@ public class ComPort {
     }
 
 
-    byte[] receive() {
+    byte[] receive() throws InterruptedException {
         System.out.println("\nReceiving File...");
 
-            try {
+    //        try {
                     while (sPort.bytesAvailable() == 0) {
                         Thread.sleep(3000);
                     }
@@ -61,16 +61,17 @@ public class ComPort {
 
 
 
-
-            } catch (InterruptedException e) {
+/*
+            } catch (Exception e) {
+                this.sPort.closePort();
                 System.out.println("Thread interrupted");
                 System.out.println("Reconnecting");
                 this.reconect();
-
                 this.receive();
-            }
-        return null;
 
+
+            }
+  */
     }
 
     public boolean receiveConf() {
