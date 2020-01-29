@@ -18,17 +18,22 @@ class ReceivePacket {
 
             dataF = cP.receive();
             baos.write(Arrays.copyOfRange(dataF,3, dataF.length-5));
+
             try {
+
 
                 byte x = dataF[2];
 
                 Send_T st = new Send_T();
                 if (cl.checkCRC(dataF)) {
                     if (cl.checkSEQ(dataF)) {
+                        this.DataToW = baos.toByteArray();
                         System.out.println("\nBem recebido\n seqN: " + dataF[2]);
                         cP.send(st.ackT(x), st.ackT(x).length);
+
                     } else {
                         System.out.println("Numero de sequencia errado");
+                        cP.send(st.nackT(cl.getSq()), st.nackT(cl.getSq()).length);
                     }
                 } else {
 
@@ -42,7 +47,6 @@ class ReceivePacket {
             }
         }while(dataF.length == SizePacket);
 
-        this.DataToW = baos.toByteArray();
     }
 
 

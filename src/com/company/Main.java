@@ -13,14 +13,13 @@ public class Main {
        // WriteReceiver wr = new WriteReceiver();
        // FWrite fw=new FWrite(wr.filename);
 
-        System.out.println("GitHub change");
 
-        FWrite fw = new FWrite("tracy-chap-test.jpg");
-
-        System.out.println("Esperando o ficheiro ser enviado...\n");
+        FWrite fw = new FWrite("led_1.jfif");
 
 
-        ReceivePacket rp = new ReceivePacket("COM3", 9600);
+
+
+        ReceivePacket rp = new ReceivePacket("COM2", 9600);
 
           fw.writeData(rp.getDataF());
 

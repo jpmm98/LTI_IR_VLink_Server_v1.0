@@ -9,18 +9,23 @@ import static com.company.FRead.DataSize;
 
 public class ComPort {
 
+
     private String portN;
     private SerialPort sPort;
     private int baudrate;
 
 
     ComPort(String nomePorta, int baudRate){
+
+
+
         this.portN = nomePorta;
         this.baudrate = baudRate;
 
         this.sPort = SerialPort.getCommPort(this.portN);
-        this.sPort.setComPortParameters(this.baudrate,8, 1, 0);
-
+        this.sPort.setFlowControl(SerialPort.FLOW_CONTROL_DISABLED);
+        this.sPort.setComPortParameters(this.baudrate,8, 1, SerialPort.NO_PARITY);
+        this.reconect();
 
     }
 
@@ -35,14 +40,12 @@ public class ComPort {
     }
 
 
-    byte[] receive() {
+    byte[] receive() throws InterruptedException {
+        System.out.println("\nReceiving File...");
 
-
-        this.sPort.openPort();
-
-            try {
+    //        try {
                     while (sPort.bytesAvailable() == 0) {
-                        Thread.sleep(300);
+                        Thread.sleep(3000);
                     }
 
                         System.out.println("Bytes na trama: "+sPort.bytesAvailable());
@@ -58,12 +61,17 @@ public class ComPort {
 
 
 
-
+/*
             } catch (Exception e) {
-                e.printStackTrace();
-            }
-        return null;
+                this.sPort.closePort();
+                System.out.println("Thread interrupted");
+                System.out.println("Reconnecting");
+                this.reconect();
+                this.receive();
 
+
+            }
+  */
     }
 
     public boolean receiveConf() {
@@ -75,6 +83,26 @@ public class ComPort {
             return c[0] == ack;
         }
         return false;
+    }
+
+    public void reconect(){
+
+        int[] timer = new int[100];
+        System.out.println("Trying to open port...");
+
+        for (int t: timer) {
+            while(!this.sPort.isOpen()){
+
+                try{
+                    this.sPort.openPort();
+                    System.out.print(".");
+                    Thread.sleep(1000);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        }
     }
 
     public int getBytesAvailable(){
