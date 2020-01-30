@@ -1,7 +1,6 @@
 package com.company;
 
 import java.io.*;
-import java.util.Arrays;
 
 public class FWrite {
 
@@ -41,5 +40,9 @@ public class FWrite {
 
     public long getfSize()      { return new File(this.fName).length(); }
     public String getfName()    { return fName; }
+
+    public FileOutputStream getfile(){
+        return this.oStream;
+    }
 
 }

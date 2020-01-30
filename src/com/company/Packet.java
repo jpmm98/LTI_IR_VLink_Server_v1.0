@@ -73,7 +73,7 @@ public class Packet {
                         try {
 
                             Send_T sendTrama = new Send_T();
-                            byte[] pack = sendTrama.ackT(this.sq);
+                            byte[] pack = sendTrama.nackT(this.sq);
                             this.cp.send(pack, pack.length);
 
                             if (sq == 0) {

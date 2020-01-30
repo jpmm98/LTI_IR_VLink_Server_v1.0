@@ -87,10 +87,8 @@ public class ComPort {
 
     public void reconect(){
 
-        int[] timer = new int[100];
         System.out.println("Trying to open port...");
 
-        for (int t: timer) {
             while(!this.sPort.isOpen()){
 
 
@@ -103,9 +101,7 @@ public class ComPort {
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-
             }
-        }
     }
 
     public int getBytesAvailable(){

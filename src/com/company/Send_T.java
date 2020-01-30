@@ -40,7 +40,7 @@ public class Send_T {
     public byte[] nackT(byte sq)throws Exception{
         Trama nack = new Trama();
         nack.buildFlag();
-        nack.buildHead((byte) 2, sq);
+        nack.buildHead((byte) 002, sq);
         nack.buildFlag();
         byte[] nackPACK = nack.getDataPacket();
         nack.resetOutStream();
