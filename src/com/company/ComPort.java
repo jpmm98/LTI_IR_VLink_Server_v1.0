@@ -54,7 +54,7 @@ public class ComPort {
                         sPort.readBytes(readBuffer, readBuffer.length);
 
                         for (byte aReadBuffer : readBuffer) {
-                            System.out.print((aReadBuffer & 0xFF) + " ");
+                            System.out.print((aReadBuffer & 0xFF) + " " );
                         }
 
                         return readBuffer;
@@ -93,9 +93,12 @@ public class ComPort {
         for (int t: timer) {
             while(!this.sPort.isOpen()){
 
+
                 try{
-                    this.sPort.openPort();
+                    boolean res = this.sPort.openPort();
                     System.out.print(".");
+                    System.out.print(res);
+
                     Thread.sleep(1000);
                 }catch(Exception e){
                     e.printStackTrace();
