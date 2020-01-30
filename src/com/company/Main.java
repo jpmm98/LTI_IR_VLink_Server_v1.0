@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) throws Exception {
@@ -10,21 +12,28 @@ public class Main {
         //Faltam verificação dos Acks/Nacks no outro programa
 
 
-       // WriteReceiver wr = new WriteReceiver();
-       // FWrite fw=new FWrite(wr.filename);
 
 
-        FWrite fw = new FWrite("led_1.jfif");
+        while (true) {
+            WriteReceiver wr = new WriteReceiver();
+            FWrite fw = new FWrite(wr.filename);
 
 
+            // FWrite fw = new FWrite("led_1.jfif");
 
 
-        ReceivePacket rp = new ReceivePacket("COM2", 9600);
+            ReceivePacket rp = new ReceivePacket("COM5", 1500);
 
-          fw.writeData(rp.getDataF());
+            fw.writeData(rp.getDataF());
 
+            System.out.println("Ficheiro recebido");
+            System.out.println("Pretende sair ?");
+            Scanner sc = new Scanner(System.in);
+            String res = sc.nextLine();
 
-        System.out.println("Ficheiro recebido");
-
+            if(res == "y" ){
+                System.exit(0);
+            }
+        }
     }
 }
